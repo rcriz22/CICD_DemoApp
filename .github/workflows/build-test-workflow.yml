@@ -34,3 +34,9 @@ jobs:
       # Creating productno build
       - name: Build Project
         run: npm run build
+
+      #Display github context
+      - name: Display Context
+        run: |
+          echo "----Github Context-----"
+          echo '${{toJSON(github)}}'
