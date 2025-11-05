@@ -1,0 +1,36 @@
+#DEFINE THE WORKFLOW NAME
+name: Built and Test WORKFLOW
+
+#DEFINE EVENTS ON WHICH THIS WORKFLOW WILL BE TRIGGERED.
+on:
+  push: #Push Event
+    branches:
+      - main #on main branch
+
+jobs:
+  build:
+    name: Build Code
+    runs-on: ubuntu-latest #Selecting Runner
+    # runs-on: self-hosted #if self-hosted runner
+
+    steps:
+      # 1. Checkout Repository
+      - name: Checkout Code
+        uses: actions/checkout@v5
+
+      # 2. Setup build environment
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 20.x
+
+      # 3. Install project dependencies
+      - name: Install Project dependencies
+        run: npm ci #Clean Install
+
+      - name: Run Unit Testing
+        run: npm run test
+
+      # Creating productno build
+      - name: Build Project
+        run: npm run build
